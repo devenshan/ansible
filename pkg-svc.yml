@@ -1,0 +1,19 @@
+---
+- hosts: all
+# Testing ansible through github 
+
+# File that ansible will use for logs    
+logfile: /var/log/ansible-pull.log
+
+# Directory to where repository will be cloned
+workdir: /var/lib/ansible/local
+
+tasks: 
+  - name: Install wireshark packet capture tool
+    yum: pkg=wireshark state=latest update_cache=true
+  - name: Install pip on the client machines
+    yum: pkg=python-pip state=latest update_cache=true
+  - name: Install python-ncclient on the hosts
+    yum: pkg=python-ncclient state=present update_cache=true
+  - name: check if iptables service is running
+    service: name=iptables state=started 
